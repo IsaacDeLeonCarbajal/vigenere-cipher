@@ -1,14 +1,12 @@
 <?php
 
 require 'vendor/autoload.php';
+require 'lib/config.php';
 
-use Vigenere\Support\GlobalFunctionsProvider;
 use Vigenere\VigenereCipher;
 
-(new GlobalFunctionsProvider)(); // Register helper functions
-
-$obj = new VigenereCipher(
+$cipher = new VigenereCipher(
     transform: fn ($v) => strtoupper($v),
 );
 
-echo $obj->encrypt('VERSAILLES', 'CHEESE');
+echo $cipher->encrypt('VERSAILLES', 'CHEESE');

@@ -2,8 +2,6 @@
 
 namespace Vigenere;
 
-use InvalidArgumentException;
-
 class VigenereCipher
 {
     private array $alphabet;
