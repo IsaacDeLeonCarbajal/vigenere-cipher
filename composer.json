@@ -1,0 +1,9 @@
+{
+    "name": "isaac/vigenere-cipher",
+    "autoload": {
+        "psr-4": {
+            "Vigenere\\": "src/"
+        }
+    },
+    "require": {}
+}
