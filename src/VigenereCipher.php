@@ -22,9 +22,9 @@ class VigenereCipher
 
     public function __construct(string $key, string $alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', callable $transform = null)
     {
-        $this->keyValues = $this->buildRawCodesArray($key);
         $this->alphabet = str_split($alphabet);
         $this->transform = $transform ?? fn ($v) => $v;
+        $this->keyValues = $this->buildRawCodesArray($key);
     }
 
     /**
