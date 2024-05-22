@@ -2,6 +2,8 @@
 
 namespace Vigenere;
 
+use InvalidArgumentException;
+
 class VigenereCipher
 {
     private array $alphabet;
@@ -21,7 +23,16 @@ class VigenereCipher
         $encrypted = '';
 
         foreach ($textValues as $val) {
-            $encrypted .= chr(($this->buildRawEncryptedCode($val, $keyValues, strlen($encrypted)) % $this->getAlphabetLength()) + $this->getFirstCode());
+            switch (gettype($val)) {
+                case 'string':
+                    $encrypted .= $val;
+                    break;
+                case 'integer':
+                    $encrypted .= chr(($this->buildRawEncryptedCode($val, $keyValues, strlen($encrypted)) % $this->getAlphabetLength()) + $this->getFirstCode());
+                    break;
+                default:
+                    throw new InvalidArgumentException('Values must be a string or a number, got ' . gettype($val));
+            }
         }
 
         return $encrypted;
@@ -31,9 +42,7 @@ class VigenereCipher
     {
         $text = ($this->transform)($text);
 
-        $filteredArray = array_filter(str_split($text), fn ($c) => in_array($c, $this->alphabet));
-
-        return array_map(fn ($c) => ord($c) - $this->getFirstCode(), $filteredArray);
+        return array_map(fn ($c) => in_array($c, $this->alphabet) ? (ord($c) - $this->getFirstCode()) : $c, str_split($text));
     }
 
     private function buildRawEncryptedCode(int $code, array $keys, int $count)
