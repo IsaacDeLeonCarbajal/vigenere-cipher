@@ -23,16 +23,10 @@ class VigenereCipher
         $encrypted = '';
 
         foreach ($textValues as $val) {
-            switch (gettype($val)) {
-                case 'string':
-                    $encrypted .= $val;
-                    break;
-                case 'integer':
-                    $encrypted .= chr(($this->buildRawEncryptedCode($val, $keyValues, strlen($encrypted)) % $this->getAlphabetLength()) + $this->getFirstCode());
-                    break;
-                default:
-                    throw new InvalidArgumentException('Values must be a string or a number, got ' . gettype($val));
-            }
+            $encrypted .= match (gettype($val)) {
+                'string' => $val,
+                'integer' => chr(($this->buildRawEncryptedCode($val, $keyValues, strlen($encrypted)) % $this->getAlphabetLength()) + $this->getFirstCode()),
+            };
         }
 
         return $encrypted;

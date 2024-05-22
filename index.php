@@ -11,4 +11,4 @@ $obj = new VigenereCipher(
     transform: fn ($v) => strtoupper($v),
 );
 
-echo $obj->encrypt('vERSAILLES', 'CHEESE');
+echo $obj->encrypt('VERSAILLES', 'CHEESE');
