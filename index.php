@@ -1,3 +1,7 @@
+<?php
+require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/config.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +22,7 @@
             <div class="col-4 col-md-3">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Plain text">
-                    <button class="btn btn-outline-primary" type="button">Encrypt</button>
+                    <button class="btn btn-outline-primary" type="button" onclick="requestEncryption('VERSAILLES')">Encrypt</button>
                 </div>
             </div>
             <div class="col-4 col-md-3">
@@ -37,7 +41,24 @@
 
     <script>
         const requestEncryption = (plainText) => {
-            fetch()
+            fetch('<?= url("src/encrypt.php") ?>', {
+                    method: 'POST',
+                    body: createFormData({
+                        plain_text: plainText,
+                    }),
+                })
+                .then(response => response.json())
+                .then(console.log)
+        }
+
+        const createFormData = (data) => {
+            const formData = new FormData();
+
+            for (const key in data) {
+                formData.append(key, data[key]);
+            }
+
+            return formData;
         }
     </script>
 </body>
