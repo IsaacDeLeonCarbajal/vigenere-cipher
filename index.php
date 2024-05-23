@@ -21,18 +21,18 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/config.php';
         <div class="d-flex justify-content-between">
             <div class="col-4 col-md-3">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Plain text">
-                    <button class="btn btn-outline-primary" type="button" onclick="requestEncryption('VERSAILLES')">Encrypt</button>
+                    <input id="plain-text-input" type="text" class="form-control" placeholder="Plain text">
+                    <button class="btn btn-outline-primary" type="button" onclick="requestEncryption(document.getElementById('plain-text-input').value)">Encrypt</button>
                 </div>
             </div>
             <div class="col-4 col-md-3">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Encrypted text">
+                    <input id="encrypted-text-input" type="text" class="form-control" placeholder="Encrypted text">
                     <button class="btn btn-outline-primary" type="button">Decrypt</button>
                 </div>
             </div>
             <div class="col-4 col-md-3">
-                <input type="text" class="form-control" placeholder="Decrypted text">
+                <input id="decrypted-text-input" type="text" class="form-control" placeholder="Decrypted text">
             </div>
         </div>
     </main>
@@ -48,7 +48,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/config.php';
                     }),
                 })
                 .then(response => response.json())
-                .then(console.log)
+                .then((data) => {
+                    document.getElementById('encrypted-text-input').value = data.data;
+                })
         }
 
         const createFormData = (data) => {
