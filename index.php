@@ -1,19 +1,3 @@
-<?php
-
-require 'vendor/autoload.php';
-require 'lib/config.php';
-
-use Vigenere\VigenereCipher;
-
-$cipher = new VigenereCipher(
-    'CHEESE',
-    transform: fn ($v) => strtoupper($v),
-);
-
-echo $cipher->encrypt('VERSAILLES');
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -50,6 +34,12 @@ echo $cipher->encrypt('VERSAILLES');
     </main>
 
     <script src="bootstrap/css/bootstrap.min.js"></script>
+
+    <script>
+        const requestEncryption = (plainText) => {
+            fetch()
+        }
+    </script>
 </body>
 
 </html>
