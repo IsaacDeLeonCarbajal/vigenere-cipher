@@ -28,7 +28,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/config.php';
             <div class="col-4 col-md-3">
                 <div class="input-group mb-3">
                     <input id="encrypted-text-input" type="text" class="form-control" placeholder="Encrypted text">
-                    <button class="btn btn-outline-primary" type="button">Decrypt</button>
+                    <button class="btn btn-outline-primary" type="button" onclick="requestDecryption(document.getElementById('encrypted-text-input').value)">Decrypt</button>
                 </div>
             </div>
             <div class="col-4 col-md-3">
@@ -37,7 +37,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/config.php';
         </div>
     </main>
 
-    <script src="bootstrap/css/bootstrap.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
 
     <script>
         const requestEncryption = (plainText) => {
@@ -50,6 +50,19 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/config.php';
                 .then(response => response.json())
                 .then((data) => {
                     document.getElementById('encrypted-text-input').value = data.data;
+                })
+        }
+
+        const requestDecryption = (encryptedText) => {
+            fetch('<?= url("src/decrypt.php") ?>', {
+                    method: 'POST',
+                    body: createFormData({
+                        encrypted_text: encryptedText,
+                    }),
+                })
+                .then(response => response.json())
+                .then((data) => {
+                    document.getElementById('decrypted-text-input').value = data.data;
                 })
         }
 
