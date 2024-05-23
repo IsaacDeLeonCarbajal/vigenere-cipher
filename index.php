@@ -10,11 +10,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/config.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
 <body>
-
     <main class="my-5 container">
         <h1 class="mb-5">Vigénere Cipher</h1>
 
@@ -36,8 +35,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/config.php';
             </div>
         </div>
     </main>
-
-    <script src="bootstrap/js/bootstrap.min.js"></script>
 
     <script>
         const requestEncryption = (plainText) => {
