@@ -47,6 +47,25 @@ class VigenereCipher
     }
 
     /**
+     * Decrypt the given text using the defined key
+     */
+    public function decrypt(string $originalText)
+    {
+        $textValues = $this->buildRawCodesArray($originalText); // Characters from text parsed to raw ascii codes
+
+        $encrypted = ''; // Resulting encrypted value
+
+        foreach ($textValues as $val) {
+            $encrypted .= match (gettype($val)) {
+                'string' => $val, // If should not be encrypted (not in the alphabet)
+                'integer' => chr(($this->buildRawDecryptedCode($val, $this->keyValues, strlen($encrypted)) % $this->getAlphabetLength()) + $this->getFirstCode()), // Encrypt value
+            };
+        }
+
+        return $encrypted;
+    }
+
+    /**
      * Build array of text parsed to raw ascii codes  
      * 
      * If any of the values is not in the alphabet, no transformation applied
@@ -66,6 +85,16 @@ class VigenereCipher
     private function buildRawEncryptedCode(int $code, array $keys, int $count)
     {
         return $code + $keys[$count % count($keys)];
+    }
+
+    /**
+     * Generate a raw decrypted code from the given ascii code, keys and count  
+     * 
+     * The raw code means it is with the codes beginning from zero
+     */
+    private function buildRawDecryptedCode(int $code, array $keys, int $count)
+    {
+        return $code - $keys[$count % count($keys)];
     }
 
     /**
