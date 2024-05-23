@@ -53,16 +53,16 @@ class VigenereCipher
     {
         $textValues = $this->buildRawCodesArray($originalText); // Characters from text parsed to raw ascii codes
 
-        $encrypted = ''; // Resulting encrypted value
+        $decrypted = ''; // Resulting decrypted value
 
         foreach ($textValues as $val) {
-            $encrypted .= match (gettype($val)) {
-                'string' => $val, // If should not be encrypted (not in the alphabet)
-                'integer' => chr(($this->buildRawDecryptedCode($val, $this->keyValues, strlen($encrypted)) % $this->getAlphabetLength()) + $this->getFirstCode()), // Encrypt value
+            $decrypted .= match (gettype($val)) {
+                'string' => $val, // If should not be decrypted (not in the alphabet)
+                'integer' => chr(($this->buildRawDecryptedCode($val, $this->keyValues, strlen($decrypted)) % $this->getAlphabetLength()) + $this->getFirstCode()), // Decrypt value
             };
         }
 
-        return $encrypted;
+        return $decrypted;
     }
 
     /**
