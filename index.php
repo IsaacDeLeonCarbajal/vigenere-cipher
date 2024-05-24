@@ -34,14 +34,28 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/config.php';
                 <input id="decrypted-text-input" type="text" class="form-control" placeholder="Decrypted text">
             </div>
         </div>
+
+        <div class="d-flex justify-content-start">
+            <div class="col-4 col-md-3">
+                <input id="key-text-input" type="text" class="form-control" placeholder="Key">
+            </div>
+        </div>
     </main>
 
     <script>
         const requestEncryption = (plainText) => {
+            let key = getKey();
+
+            if (!key) {
+                alert('You need a key to make any operation');
+                return;
+            }
+
             fetch('<?= url("src/encrypt.php") ?>', {
                     method: 'POST',
                     body: createFormData({
                         plain_text: plainText,
+                        key: key,
                     }),
                 })
                 .then(response => response.json())
@@ -51,16 +65,28 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/config.php';
         }
 
         const requestDecryption = (encryptedText) => {
+            let key = getKey();
+
+            if (!key) {
+                alert('You need a key to make any operation');
+                return;
+            }
+
             fetch('<?= url("src/decrypt.php") ?>', {
                     method: 'POST',
                     body: createFormData({
                         encrypted_text: encryptedText,
+                        key: key,
                     }),
                 })
                 .then(response => response.json())
                 .then((data) => {
                     document.getElementById('decrypted-text-input').value = data.data;
                 })
+        }
+
+        const getKey = () => {
+            return document.getElementById('key-text-input').value || null;
         }
 
         const createFormData = (data) => {

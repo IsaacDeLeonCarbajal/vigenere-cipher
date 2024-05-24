@@ -6,9 +6,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/lib/config.php';
 use Vigenere\VigenereCipher;
 
 $encryptedText = $_POST['encrypted_text'] ?? '###';
+$key = strtoupper($_POST['key']);
 
 $cipher = new VigenereCipher(
-    'CHEESE',
+    $key,
     transform: fn ($v) => strtoupper($v),
 );
 
